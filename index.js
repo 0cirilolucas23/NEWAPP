@@ -12,25 +12,33 @@ console.log(mensagem);
 
 //arrays, objetos
 
-let metas = ["Lucas", "alo"]
+/*let metas = ["Lucas", "alo"]
 
 console.log(metas[0] + metas[1])
-console.log(metas[1] + " " + metas[0])
+console.log(metas[1] + " " + metas[0])*/
 
 // objeto
 
 let meta = {
     value: 'Ler um livro todo mês',
-    address: 2,
     checked: true,
-    log: (info) => {
+    /*log: (info) => {
         console.log(info)
-    }
+    }*/
 }
 
-console.log(meta.value)
+let metas = [
+    meta,
+    {
+        value: "Caminhar 20 minutos todos os dias",
+        checked: false,
+    }
+]
+
+console.log(metas[1].value)
+/*console.log(meta.value)
 meta.value ="Não é mais ler um livro"
-meta.log(meta.value)
+meta.log(meta.value)*/
 
 //function // arrow function
 
