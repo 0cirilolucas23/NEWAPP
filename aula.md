@@ -49,3 +49,10 @@ Apresentar os dados
 
 ## condicionais:
 - [x] switch
+
+## Módulos em Node.js:
+- [x] Importação de módulos (requirem CommonJS) através do comando 'npm install inquirer'
+- [x] Biblioteca 'inquirer' para criar prompts interativos
+
+## Programação assíncrona e Promisses:
+- [x] Uso de funções assíncronas (async/await)
