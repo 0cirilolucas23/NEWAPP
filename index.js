@@ -1,4 +1,15 @@
-const { select } = require ('@inquirer/prompts')
+const { select, input } = require ('@inquirer/prompts') // buscando na pasta prompts as funções dentro de {}
+
+const cadastrarMeta = async () => {
+    const meta = await input ({ message: "Digite a meta: "})
+
+    if(meta.length == 0){ //meta.length == 0 significa que a leitura da função meta mostrou que não tem nenhum texto ou está vazia
+        console.log('A meta não pode ser vazia!')
+        return // aqui encerra a condição
+        // return cadastrarMeta() -- Isso poderia ser usado para que o usuário ficasse preso até digitar a meta e passar para próxima etapa
+
+    }
+}
 
 const start= async () =>{
     
@@ -27,6 +38,7 @@ const start= async () =>{
             switch(opcao)
             {
                 case "cadastrar":
+                    await cadastrarMeta() //sempre usar await antes da função, quando ela for assíncrona
                     console.log("Vamos cadastrar")
                     break
                 case "listar":
