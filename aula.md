@@ -1,12 +1,12 @@
 ## peças de uma linguagem
 
 - [x] Comentários
-- Declaração de variáveis (const, let)
-- Operadores (atribuição, concatenação, matemática, lógicos)
-- Tipos de Dados (string, number, boolean)
-- Estrutura de dados (fuctions, object, array)
-- Controle de fluxo (if/else)
-- Estrutura de repetição (for, while)
+- [x] Declaração de variáveis (const, let)
+- [x] Operadores (atribuição, concatenação, matemática, lógicos)
+- [x] Tipos de Dados (string, number, boolean)
+- [x] Estrutura de dados (fuctions, object, array)
+- [x] Controle de fluxo (if/else)
+- [x] Estrutura de repetição (for, while)
 
 
 # fases da resolução de um problema
@@ -32,7 +32,15 @@ Apresentar os dados
 
 ## Operadores:
 - [x] Operadores de atribuição de valor
-- [x] peradores de concatenação
+- [x] peradores de concatenação +
+- [x] Operadores de comparação:
+    1 == 2 (1 é igual a 2)
+    1 ! =2 (1 é diferente de 2)
+    1 < 2
+    1 > 2
+    1 < = 2
+    1 > = 2
+
 
 ## arrays:
 - [x] Uma lista que contém qualquer tipo de dado
@@ -49,6 +57,7 @@ Apresentar os dados
 
 ## condicionais:
 - [x] switch
+- [x] if/else (controle de fluxo)
 
 ## Módulos em Node.js:
 - [x] Importação de módulos (requirem CommonJS) através do comando 'npm install inquirer'
