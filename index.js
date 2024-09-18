@@ -53,6 +53,24 @@ const listarMetas = async () => {
     console.log('Meta(s) concluída(s)')
 }
 
+const metasRealizadas = async () => {
+    // Toda HOF recebe uma função, nesse caso vai ser no .filter
+    const realizadas = metas.filter((meta) => {
+        return meta.checked
+        //sempre que o retorno for verdadeiro, ele vai pegar uma nova meta a adcionar a "realizadas"
+    })
+
+    if(realizadas.length ==0){
+        console.log("Não existem metas realizadas!")
+        return
+    }
+
+    await select({
+        message: "Metas Realizadas",
+        choices: [...realizadas]
+    })
+}
+
 const start = async () =>{
     
     while(true){
@@ -71,6 +89,10 @@ const start = async () =>{
                     value: "listar"
                 },
                 {
+                    name: "Metas Realizadas",
+                    value: "realizadas"
+                },
+                {
                     name: "Sair",
                     value: "sair"
                 }
@@ -87,7 +109,11 @@ const start = async () =>{
                     await listarMetas() 
                     console.log("Vamos listar")
                     break
+                case "realizadas":
+                    await metasRealizadas()
+                    break
                 case "sair":
+                    console.log("Até a próxima!")
                     return
             }
     
