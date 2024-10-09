@@ -1,13 +1,29 @@
 const { select, input, checkbox } = require ('@inquirer/prompts') // buscando na pasta prompts as funções dentro de {}
+const fs = require("fs").promises
 
 let mensagem = "Bem-vindo ao App de metas!"
 
-let meta = {
+/*let meta = {
     value: 'Tomar 3L de água por dia',
     checked: false,
+}*/
+
+let metas // = [ meta ]
+
+const carregarMetas = async () => {
+    try {
+        const dados = await fs.readFile("metas.json", "utf-8")// utf-8 identifica os tipos de dados que a função vai ler
+        metas = JSON.parse(dados) // parse vai convertes os dados do metas.json em um array. JSON para JS
+    }
+    catch(error){
+        metas = []
+    }
 }
 
-let metas = [ meta ]
+const salvarMetas = async () =>{
+    await fs.writeFile("metas.json", JSON.stringify(metas, null, 2))// stringfy vai converter JS em json
+
+}
 
 const cadastrarMeta = async () => {
     const meta = await input ({ message: "Digite a meta: "})
@@ -16,7 +32,6 @@ const cadastrarMeta = async () => {
         mensagem = "A meta não pode ser vazia!"
         return // aqui encerra a condição
         // return cadastrarMeta() -- Isso poderia ser usado para que o usuário ficasse preso até digitar a meta e passar para próxima etapa
-
     }
 
     metas.push( //push é uma função! nesse caso vai colocar aqui dentro os objetos as metas criadas na "let metas"
@@ -28,6 +43,12 @@ const cadastrarMeta = async () => {
 }
 
 const listarMetas = async () => {
+
+    if(metas.length == 0){
+        mensagem = "Não existem metas!"
+        return
+    }
+
     const respostas = await checkbox ({
         message: "Use as setas para mudar de meta, o espaço para marcar ou desmarcar e Enter para finalizar essa etapa",
         choices: [...metas],// aqui estamos fazendo uma cópia da let metas na linha 3, copiando todas as informações que entrarem em metas
@@ -58,6 +79,11 @@ const listarMetas = async () => {
 }
 
 const metasRealizadas = async () => {
+    if(metas.length == 0){
+        mensagem = "Não existem metas!"
+        return
+    }
+
     // Toda Higher Order Function (HOF) recebe uma função, nesse caso vai ser no .filter, onde ele vai pegar uma meta (variavel meta) e vai realizar uma ação
     const realizadas = metas.filter((meta) => {// filter vai filtrar e substituir o array
         return meta.checked
@@ -76,6 +102,11 @@ const metasRealizadas = async () => {
 }
 
 const metasAbertas = async () =>{
+    if(metas.length == 0){
+        mensagem = "Não existem metas!"
+        return
+    }
+
     const abertas = metas.filter((meta) => {
         return meta.checked != true
     })
@@ -92,6 +123,11 @@ const metasAbertas = async () =>{
 }
 
 const deletarMetas = async () =>{
+    if(metas.length == 0){
+        mensagem = "Não existem metas!"
+        return
+    }
+
     const metasDesmarcadas = metas.map((meta) =>{//map aqui serve para modificar o item original dentro do array. Nesse caso o 'meta'
         return { value: meta.value, checked: false}//checked:false vai desmarcar o que estiver marcado
     })
@@ -128,9 +164,12 @@ const mostrarMensagem = () => {
 }
 
 const start = async () =>{
+
+    await carregarMetas()
     
     while(true){
         mostrarMensagem()
+        await salvarMetas()
         //let opcao = 'cadastrar' //essa let opção está definindo para onde ele vai. Se eu colocar 'sair' ele vai para o case de sair e encerra o loop
 
         const opcao = await select ({ // await = aguardar e sempre que utilizar a função deve conter a expressão 'async'

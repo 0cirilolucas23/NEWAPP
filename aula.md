@@ -64,6 +64,12 @@ Apresentar os dados
 ## Módulos em Node.js:
 - [x] Importação de módulos (requirem CommonJS) através do comando 'npm install inquirer'
 - [x] Biblioteca 'inquirer' para criar prompts interativos
+- [x] fs (file system) módulo nativo
+
+## JSON
+- [x] Javascript Object Notation (.json)
+- [x] JSON.parse() transforma de Json para JS
+- [x] JSON.stringfy() transforma de JS para Json
 
 ## Programação assíncrona e Promisses:
 - [x] Uso de funções assíncronas (async/await)
