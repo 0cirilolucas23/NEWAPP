@@ -1,5 +1,7 @@
 const { select, input, checkbox } = require ('@inquirer/prompts') // buscando na pasta prompts as funções dentro de {}
 
+let mensagem = "Bem-vindo ao App de metas!"
+
 let meta = {
     value: 'Tomar 3L de água por dia',
     checked: false,
@@ -11,7 +13,7 @@ const cadastrarMeta = async () => {
     const meta = await input ({ message: "Digite a meta: "})
 
     if(meta.length == 0){ //meta.length == 0 significa que a leitura da constante 'meta' mostrou que não tem nenhum texto ou está vazia
-        console.log('A meta não pode ser vazia!')
+        mensagem = "A meta não pode ser vazia!"
         return // aqui encerra a condição
         // return cadastrarMeta() -- Isso poderia ser usado para que o usuário ficasse preso até digitar a meta e passar para próxima etapa
 
@@ -20,6 +22,8 @@ const cadastrarMeta = async () => {
     metas.push( //push é uma função! nesse caso vai colocar aqui dentro os objetos as metas criadas na "let metas"
         {value: meta, checked: false }
     )
+
+    mensagem = "Meta cadastrada com sucesso!"
 
 }
 
@@ -31,7 +35,7 @@ const listarMetas = async () => {
     })
 
     if(respostas.length ==0){
-        console.log("Nenhuma meta selecionada!")
+        mensagem ="Nenhuma meta selecionada!"
         return
 
     }
@@ -50,7 +54,7 @@ const listarMetas = async () => {
         meta.checked = true
     })
 
-    console.log('Meta(s) concluída(s)')
+    mensagem= 'Meta(s) concluída(s)'
 }
 
 const metasRealizadas = async () => {
@@ -61,7 +65,7 @@ const metasRealizadas = async () => {
     })
 
     if(realizadas.length ==0){
-        console.log("Não existem metas realizadas!")
+        mensagem = "Não existem metas realizadas!"
         return
     }
 
@@ -77,7 +81,7 @@ const metasAbertas = async () =>{
     })
 
     if (abertas.length == 0){
-        console.log("Não existem metas abertas!")
+        mensagem = "Não existem metas abertas!"
         return
     }
 
@@ -99,7 +103,7 @@ const deletarMetas = async () =>{
     })
 
     if(itemsADeletar.length == 0){
-        console.log("Não há nenhum item para deletar!")
+        mensagem = "Não há nenhum item para deletar!"
         return
     }
 
@@ -109,13 +113,24 @@ const deletarMetas = async () =>{
         })
     })
 
-    console.log("Meta(s) deletada(s) com sucesso!")
+    mensagem = "Meta(s) deletada(s) com sucesso!"
 
+}
+//sistema de mensagems
+const mostrarMensagem = () => {
+    console.clear();// Serve para limpar o terminal, assim não fica cheio de textos
+
+    if(mensagem != 0){
+        console.log(mensagem)
+        console.log("") // quebra de linha
+        mensagem = "" // retorna uma mensagem vazia
+    }
 }
 
 const start = async () =>{
     
     while(true){
+        mostrarMensagem()
         //let opcao = 'cadastrar' //essa let opção está definindo para onde ele vai. Se eu colocar 'sair' ele vai para o case de sair e encerra o loop
 
         const opcao = await select ({ // await = aguardar e sempre que utilizar a função deve conter a expressão 'async'
@@ -153,11 +168,10 @@ const start = async () =>{
             {
                 case "cadastrar":
                     await cadastrarMeta() //sempre usar await antes da função, quando ela for assíncrona
-                    console.log("Vamos cadastrar")
                     break
                 case "listar":
                     await listarMetas() 
-                    console.log("Vamos listar")
+                    mensagem = "Vamos listar"
                     break
                 case "realizadas":
                     await metasRealizadas()
