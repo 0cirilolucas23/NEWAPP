@@ -54,8 +54,8 @@ const listarMetas = async () => {
 }
 
 const metasRealizadas = async () => {
-    // Toda HOF recebe uma função, nesse caso vai ser no .filter
-    const realizadas = metas.filter((meta) => {
+    // Toda Higher Order Function (HOF) recebe uma função, nesse caso vai ser no .filter, onde ele vai pegar uma meta (variavel meta) e vai realizar uma ação
+    const realizadas = metas.filter((meta) => {// filter vai filtrar e substituir o array
         return meta.checked
         //sempre que o retorno for verdadeiro, ele vai pegar uma nova meta a adcionar a "realizadas"
     })
@@ -87,6 +87,32 @@ const metasAbertas = async () =>{
     })
 }
 
+const deletarMetas = async () =>{
+    const metasDesmarcadas = metas.map((meta) =>{//map aqui serve para modificar o item original dentro do array. Nesse caso o 'meta'
+        return { value: meta.value, checked: false}//checked:false vai desmarcar o que estiver marcado
+    })
+
+    const itemsADeletar = await checkbox({
+        message: "Selecione item para deletar",
+        choices: [...metasDesmarcadas],
+        instructions: false,
+    })
+
+    if(itemsADeletar.length == 0){
+        console.log("Não há nenhum item para deletar!")
+        return
+    }
+
+    itemsADeletar.forEach((item) =>{ //O bloco itemsADeletar tem a função de verificar se a meta listada é verdadeira para ser deletada
+        metas = metas.filter((meta) =>{ // Ex.: Se Tomar 3L de água for diferente de outro item da lista, o value vai ser alterado e a meta vai ser deletada. 
+            return meta.value != item 
+        })
+    })
+
+    console.log("Meta(s) deletada(s) com sucesso!")
+
+}
+
 const start = async () =>{
     
     while(true){
@@ -113,6 +139,10 @@ const start = async () =>{
                     value: "abertas"
                 },
                 {
+                    name: "Deletar Metas",
+                    value: "deletar"
+                },
+                {
                     name: "Sair",
                     value: "sair"
                 }
@@ -134,6 +164,9 @@ const start = async () =>{
                     break
                 case "abertas":
                     await metasAbertas()
+                    break
+                case "deletar":
+                    await deletarMetas()
                     break
                 case "sair":
                     console.log("Até a próxima!")
